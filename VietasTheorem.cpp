@@ -11,10 +11,10 @@ enum withA
 
 //глобальные переменные
 withA G_WithoutA{ e_rand };	// e_withoutA - a = 1, e_withA - a != 1, e_rand - случайно
-int G_minX{ -20 };					//минимальное значение корней
-int G_maxX{ 20 };						//максимальное значение корней
-int G_minA{ 1 };						//минимальное значение A
-int G_maxA{ 5 };						//максимальное значение A
+int G_minX{ -20 };		//минимальное значение корней
+int G_maxX{ 20 };		//максимальное значение корней
+int G_minA{ 1 };		//минимальное значение A
+int G_maxA{ 5 };		//максимальное значение A
 bool autoDeleting{ true };	//автоделение (если непонятно - смотрите строку 79)
 
 
@@ -33,16 +33,16 @@ void VietasTheorem()
 
 	while (testing)
 	{
-		int X1, X2;															//корни уравнения
-		while (true)														//цикл, необходимый для того, чтобы сумма корней уравнения не была равна нулю
+		int X1, X2;					//корни уравнения
+		while (true)					//цикл, необходимый для того, чтобы сумма корней уравнения не была равна нулю
 		{
 			X1 = getRandomNumber(G_minX, G_maxX);	//первый корень уравнения
-			while (X1 == 0)												//цикл, не пропускающий нулевые значения корня
+			while (X1 == 0)				//цикл, не пропускающий нулевые значения корня
 			{
 				X1 = getRandomNumber(G_minX, G_maxX);
 			}
 			X2 = getRandomNumber(G_minX, G_maxX);	//второй корень уравнения
-			while (X2 == 0)												//цикл, не пропускающий нулевые значения корня
+			while (X2 == 0)				//цикл, не пропускающий нулевые значения корня
 			{
 				X2 = getRandomNumber(G_minX, G_maxX);
 			}
@@ -50,26 +50,26 @@ void VietasTheorem()
 				break;
 		}
 
-		int A;																	//собственно A
-		switch (G_WithoutA)											//цикл, определяющий диапазон A в соответствии с настройками(по умолчанию диапазон 1-5)
+		int A;						//собственно A
+		switch (G_WithoutA)				//цикл, определяющий диапазон A в соответствии с настройками(по умолчанию диапазон 1-5)
 		{
 		case e_withoutA: A = 1;
 			break;
 		case e_withA: A = getRandomNumber(G_minA, G_maxA);
-			while (A == 0 || A == 1)							//цикл, не пропускающий нулевые и единичные значения A
+			while (A == 0 || A == 1)		//цикл, не пропускающий нулевые и единичные значения A
 			{
 				A = getRandomNumber(G_minA, G_maxA);
 			}
 			break;
 		case e_rand: A = getRandomNumber(G_minA, G_maxA);
-			while (A == 0)												//цикл, не пропускающий нулевые значения A
+			while (A == 0)				//цикл, не пропускающий нулевые значения A
 			{
 				A = getRandomNumber(G_minA, G_maxA);
 			}
 			break;
 		}
-		int B = -(X1 + X2) * A;									//собственно B
-		int C = (X1 * X2) * A;									//собственно C
+		int B = -(X1 + X2) * A;				//собственно B
+		int C = (X1 * X2) * A;				//собственно C
 
 
 		std::string Bcheck{ "" };
