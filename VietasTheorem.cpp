@@ -11,10 +11,10 @@ enum withA
 
 //глобальные переменные
 withA G_WithoutA{ e_rand };	// e_withoutA - a = 1, e_withA - a != 1, e_rand - случайно
-int G_minX{ -20 };		//минимальное значение корней
-int G_maxX{ 20 };		//максимальное значение корней
-int G_minA{ 1 };		//минимальное значение A
-int G_maxA{ 5 };		//максимальное значение A
+int G_minX{ -20 };			//минимальное значение корней
+int G_maxX{ 20 };			//максимальное значение корней
+int G_minA{ 1 };			//минимальное значение A
+int G_maxA{ 5 };			//максимальное значение A
 bool autoDeleting{ true };	//автоделение (если непонятно - смотрите строку 86)
 
 
@@ -33,16 +33,16 @@ void VietasTheorem()
 
 	while (testing)
 	{
-		int X1, X2;					//корни уравнения
-		while (true)					//цикл, необходимый для того, чтобы сумма корней уравнения не была равна нулю
+		int X1, X2;									//корни уравнения
+		while (true)								//цикл, необходимый для того, чтобы сумма корней уравнения не была равна нулю
 		{
 			X1 = getRandomNumber(G_minX, G_maxX);	//первый корень уравнения
-			while (X1 == 0)				//цикл, не пропускающий нулевые значения корня
+			while (X1 == 0)							//цикл, не пропускающий нулевые значения корня
 			{
 				X1 = getRandomNumber(G_minX, G_maxX);
 			}
 			X2 = getRandomNumber(G_minX, G_maxX);	//второй корень уравнения
-			while (X2 == 0)				//цикл, не пропускающий нулевые значения корня
+			while (X2 == 0)							//цикл, не пропускающий нулевые значения корня
 			{
 				X2 = getRandomNumber(G_minX, G_maxX);
 			}
@@ -50,26 +50,26 @@ void VietasTheorem()
 				break;
 		}
 
-		int A;						//собственно A
-		switch (G_WithoutA)				//цикл, определяющий диапазон A в соответствии с настройками(по умолчанию диапазон 1-5)
+		int A;										//собственно A
+		switch (G_WithoutA)							//цикл, определяющий диапазон A в соответствии с настройками(по умолчанию диапазон 1-5)
 		{
 		case e_withoutA: A = 1;
 			break;
 		case e_withA: A = getRandomNumber(G_minA, G_maxA);
-			while (A == 0 || A == 1)		//цикл, не пропускающий нулевые и единичные значения A
+			while (A == 0 || A == 1)				//цикл, не пропускающий нулевые и единичные значения A
 			{
 				A = getRandomNumber(G_minA, G_maxA);
 			}
 			break;
 		case e_rand: A = getRandomNumber(G_minA, G_maxA);
-			while (A == 0)				//цикл, не пропускающий нулевые значения A
+			while (A == 0)							//цикл, не пропускающий нулевые значения A
 			{
 				A = getRandomNumber(G_minA, G_maxA);
 			}
 			break;
 		}
-		int B = -(X1 + X2) * A;				//собственно B
-		int C = (X1 * X2) * A;				//собственно C
+		int B = -(X1 + X2) * A;						//собственно B
+		int C = (X1 * X2) * A;						//собственно C
 
 
 		std::string Bcheck{ "" };
@@ -93,11 +93,22 @@ void VietasTheorem()
 			std::cout << "X1 + X2 = " << -B << " / " << A << '\n';
 			std::cout << "X1 * X2 = " << C << " / " << A << '\n';
 		}
-		std::cout << "Введите X1 и X2: ";
+		
 
 		int X1in, X2in;
-		std::cin >> X1in >> X2in;
+		while (true)
+		{	
+			std::cout << "Введите X1 и X2: ";
+			std::cin >> X1in >> X2in;
 
+			if (std::cin.fail())	//обработка неверных значений
+			{
+				std::cin.clear();
+				std::cin.ignore(32767, '\n');
+				std::cout << "Ошибка: введён неверный символ\n";
+			}
+			else break;
+		}
 		if ((X1in == X1) && (X2in == X2))
 			std::cout << "Вы правы!\n";
 		else if ((X2in == X1) && (X1in == X2))
@@ -136,15 +147,13 @@ void settings()
 
 
 		std::cout	<< "Настройки:\n"
-				<< " --w чтобы включить режим [a = 1] (x^2 + bx + c = 0)\n"
-				<< " --a чтобы включить режим [a != 1] (ax^2 + bx + c = 0)\n"
-				<< " --r чтобы было случайно(" << chance <<"% [a = 1], "<< 100 - chance << "% [a != 1])\n"
-				<< " --d чтобы изменить диапазоны генерации корней и a"
-				<< " (текущий диапазон корней - от " << G_minX << " до " << G_maxX << ", и диапазон A - от " << G_minA << " до " << G_maxA << ")\n"
-				<< " --l чтобы переключить \"автоделение\" (" << str_autoDeleting << ")\n"
-				<< " --q назад в меню\n"
-				<< "Ввод осуществляется с английской раскладкой и без капса\n"
-				<< "Сейчас включен ";
+					<< " --w чтобы включить режим [a = 1] (x^2 + bx + c = 0)\n"
+					<< " --a чтобы включить режим [a != 1] (ax^2 + bx + c = 0)\n"
+					<< " --r чтобы было случайно(" << chance <<"% [a = 1], "<< 100 - chance << "% [a != 1])\n"
+					<< " --d чтобы изменить диапазоны генерации корней и a\n"
+					<< " --l чтобы переключить \"автоделение\" (" << str_autoDeleting << ")\n"
+					<< " --q назад в меню\n"
+					<< "Сейчас включен ";
 		switch (G_WithoutA)
 		{
 		case e_withoutA: std::cout << "режим [a = 1]\n";
@@ -174,8 +183,8 @@ void settings()
 			{
 				system("cls");
 				std::cout << "Какой диапазон изменить -\n"
-					<< " --x диапазон корней\n"
-					<< " --a диапазон A\n"
+					<< " --x диапазон корней (текущий диапазон [" << G_minX << ";" << G_maxX << "])\n"
+					<< " --a диапазон A (текущий диапазон [" << G_minA << ";" << G_maxA << "])\n"
 					<< " --d сбросить значения диапазонов\n"
 					<< " --q назад\n";
 				switch (whatPrint)
@@ -197,20 +206,27 @@ void settings()
 				{
 				case 'x': 
 				{
-					bool checkError{ false };
+					bool checkErrorS{ false };
+					bool checkErrorD{ false };
 						while (true)
 						{
 							system("cls");
 
-							if (checkError)		// вывод ошибки пользователю
-								std::cout << "Вы ввели неверный диапазон\n";
-
-							std::cout << "Введите минимальное значение диапазона X: ";
-							std::cin >> G_minX;
-							std::cout << "Введите максимальное значение диапазона X: ";
-							std::cin >> G_maxX;
-							if (G_minX > G_maxX) // отброс неверного диапазона
-								checkError = true;
+							if (checkErrorD)	// вывод ошибки пользователю
+								std::cout << "Ошибка: введён неверный диапазон\n";
+							else if (checkErrorS)
+								std::cout << "Ошибка: введён неверный символ\n";
+							
+							std::cout << "Введите мин. и макс. значения диапазона X: ";
+							std::cin >> G_minX >> G_maxX;
+							if (std::cin.fail())	//обработка неверных значений
+							{
+								std::cin.clear();
+								std::cin.ignore(32767, '\n');
+								checkErrorS = true;
+							}
+							else if ((G_minX > G_maxX) || (G_minX == 0 && G_maxX == 0)) // отброс неверного диапазона
+								checkErrorD = true;
 							else break;
 						}
 						whatPrint = 1; 
@@ -218,21 +234,28 @@ void settings()
 					break;
 				case 'a': 
 				{
-					bool checkError{ false };
+					bool checkErrorS{ false };
+					bool checkErrorD{ false };
 						while (true)
 						{
 							system("cls");
-
-							if (checkError)		// вывод ошибки пользователю
-								std::cout << "Вы ввели неверный диапазон\n";
-
-							std::cout << "Введите минимальное значение диапазона A: ";
-							std::cin >> G_minA;
-							std::cout << "Введите максимальное значение диапазона A: ";
-							std::cin >> G_maxA;
-							if (G_minA > G_maxA) // отброс неверного диапазона
-								checkError = true;
-							else break;
+	
+							if (checkErrorD)	// вывод ошибки пользователю
+								std::cout << "Ошибка: введён неверный диапазон\n";
+							else if (checkErrorS)
+								std::cout << "Ошибка: введён неверный символ\n";
+								
+								std::cout << "Введите мин. и макс. значения диапазона A: ";
+								std::cin >> G_minA >> G_maxA;
+								if (std::cin.fail())	//обработка неверных значений
+								{
+									std::cin.clear();
+									std::cin.ignore(32767, '\n');
+									checkErrorS = true;
+								}
+								else if ((G_minA > G_maxA) || (G_minA == 0 && G_maxA == 0)) // отброс неверного диапазона
+									checkErrorD = true;
+								else break;
 
 						}
 						whatPrint = 2; 
@@ -262,7 +285,7 @@ void showDeveloper()
 	while (true)
 	{
 		system("cls");
-		std::cout	<< "VietasTheorem v2020.12.23 //created by mm6adno\n"
+		std::cout	<< "VietasTheorem v2020.12.27r [1.1r] //created by mm6adno\n"
 					<< " --q назад";
 		if (_getch() == 'q')
 			return;
@@ -282,12 +305,12 @@ int main()
 		bool wAgain{ true };
 		
 		std::cout	<< "Меню:\n"
-				<< " --p чтобы начать\n"
-				<< " --s чтобы настроить\n"
-				<< " --q чтобы выйти\n"
-				<< "Чтобы выйти обратно в меню во время тестирования - напишите x1 = 0 и x2 = 0\n"
-				<< "Если вы не можете решить уравнение и хотите узнать ответ - напишите x1 = 0 и x2 = 1\n"
-				<< "Ввод осуществляется с английской раскладкой и без капса\n";
+					<< " --p чтобы начать\n"
+					<< " --s чтобы настроить\n"
+					<< " --q чтобы выйти\n"
+					<< "Чтобы выйти обратно в меню во время тестирования - напишите x1 = 0 и x2 = 0\n"
+					<< "Если вы не можете решить уравнение и хотите узнать ответ - напишите x1 = 0 и x2 = 1\n"
+					<< "Ввод осуществляется с английской раскладкой и без капса\n";
 		
 		while (wAgain)
 		{
